@@ -1,0 +1,16 @@
+.page {
+  height: 100svh;
+  width: 100svw;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.renmeiList {
+  max-width: 90%;
+  padding: 10px;
+  margin: 0 auto;
+  overflow-x: scroll;
+}
