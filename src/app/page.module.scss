@@ -1,16 +1,26 @@
-.page {
-  height: 100svh;
-  width: 100svw;
-  display: flex;
-  flex-flow: column;
-  justify-content: center;
-  align-items: center;
-  position: relative;
+
+.title {
+  padding: 8px;
+  text-align: center;
 }
 
-.renmeiList {
-  max-width: 90%;
-  padding: 10px;
-  margin: 0 auto;
+.renmei-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.renmei-list__canvas {
+  display: flex;
+  padding: 0 8px;
   overflow-x: scroll;
+
+  canvas {
+    margin: 0 auto;
+  }
+}
+
+.renmei-list__controller {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
 }

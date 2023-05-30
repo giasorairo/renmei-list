@@ -1,11 +1,19 @@
 'use client'
 
-import { NamePanels } from './components/name-panels/name-panels';
 import styles from './page.module.scss';
-import { useCallback, useEffect, useState } from 'react';
-import { COMPANY_PLATE_SIZE, NAME_PLATE_SIZE } from './components/const/const';
-import { CompanyPlate } from './components/company-plate/compan-plate';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/button/button';
+// import { RenmeiDocument } from './_components/renmei-document/renmei-document';
+import { RenmeiListCanvas } from './_components/renmai-list-canvas/renmai-list-canvas';
+import { useRenmeiListCanvas } from './_components/renmai-list-canvas/hooks/use-renmei-list-canvas';
+import { useImageDownload } from './_hooks/use-download';
+import { useCanvasToBase64 } from './_hooks/use-canvas-to-base64';
+import { DownloadPdf } from './_components/download-pdf/download-pdf';
+import { usePreviewPdf } from './_hooks/use-preview-pdf';
+import { RenmeiDocument } from './_components/renmei-document/renmei-document';
+import { Modal } from '@/components/modal/modal';
+import { useModal } from '@/components/modal/hooks/use-modal';
+import { EditNameModal } from './_components/edit-name-modal/edit-name-modal';
 
 const getWindowSize = () => {
   const width = window.innerHeight;
@@ -28,50 +36,102 @@ export default function Home() {
     '山田十郎'
   ]);
 
-  const handlerChangeName = useCallback((string: string, index: number) => {
+  const renmeiListCanvasRef = useRef<HTMLCanvasElement>(null);
+
+  const { handleClickDownloadButton } = useImageDownload(renmeiListCanvasRef);
+  const { canvasBase64, convertCanvasToBase64 } = useCanvasToBase64(renmeiListCanvasRef);
+  const { previewPdf } = usePreviewPdf(<RenmeiDocument base64Image={canvasBase64} />);
+  const { isOpen, openModal, closeModal } = useModal();
+  const {
+    isOpen: isOpenEditNameModal,
+    openModal: openEditNameModal,
+    closeModal: closeEditNameModal,
+  } = useModal();
+
+  const handleAddNames = useCallback(() => {
+    setNames((prev) => [...prev, '名前を入力', '名前を入力']);
+  }, []);
+
+  const handleDeleteNames = useCallback(() => {
+    const namesCopy = names.slice(0, names.length - 2);
+    setNames(namesCopy)
+  }, [names]);
+
+  const handleClickPrint = useCallback(() => {
+    convertCanvasToBase64();
+    openModal();
+  }, [convertCanvasToBase64, openModal]);
+
+  const [selectNameIndex, setSelectNameIndex] = useState<number | null>(null);
+  const handleClickName = useCallback((index: number) => {
+    setSelectNameIndex(index);
+    openEditNameModal();
+  }, [setSelectNameIndex, openEditNameModal]);
+
+  const handleClickOkButton = useCallback((value: string) => {
+    if (selectNameIndex === null) {
+      return;
+    }
     const namesCopy = [...names];
-    namesCopy[index] = string;
+    namesCopy[selectNameIndex] = value
     setNames(namesCopy);
-  }, [names, setNames]);
-
-  const handlerClickAddRow = useCallback(() => {
-    setNames((prev) => [...prev, '', '']);
-  }, []);
-
-  const numberOfLine = names.length / 2;
-  const width = numberOfLine * NAME_PLATE_SIZE.width + (numberOfLine - 1) * 30 + (30 * 2) + COMPANY_PLATE_SIZE.width;
-
-  const [companyName, setCompanyName] = useState('株式会社');
-
-  const handleChangeCompanyName = useCallback((string: string) => {
-    setCompanyName(string);
-  }, []);
+    closeEditNameModal();
+  }, [selectNameIndex, names, closeEditNameModal, setNames]);
 
   return (
     <div className={styles.page}>
-      <div className={styles.renmeiList}>
-        <svg viewBox={`0 0 ${width} 290`} width={width} height={290}>
-          <NamePanels names={names} onChangeNames={handlerChangeName} numberOfLine={numberOfLine} />
-          <CompanyPlate name={companyName} onChangeName={handleChangeCompanyName} position={{ x: 20, y: 100 }} />
-        </svg>
-      </div>
-      <div
-        style={{
-          position: 'absolute',
-          bottom: '10px',
-          left: '10px',
-          display: 'flex',
-          flexFlow: 'column',
-          gap: '8px',
-        }}
-      >
-        <Button color="outlineBlack" onClick={handlerClickAddRow}>
-          名前の行を追加
-        </Button>
-        <Button color="black">
-          ダウンロード
-        </Button>
-      </div>
+      <section className={styles['title']}>
+        <h1>
+          名簿作成アプリ
+        </h1>
+      </section>
+      <section className={styles['renmei-list']}>
+        <div
+          className={styles['renmei-list__canvas']}
+        >
+          <RenmeiListCanvas
+            names={names}
+            canvasRef={renmeiListCanvasRef}
+            onClickName={handleClickName}
+            onAddNames={handleAddNames}
+            onDeleteNames={handleDeleteNames}
+          />
+        </div>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/list.jpg" alt="" width="500" />
+        <div className={styles['renmei-list__controller']}>
+          <Button
+            color='black'
+            onClick={handleClickPrint}
+          >
+            印刷する
+          </Button>
+        </div>
+      </section>
+
+      <Modal isOpen={isOpen} onClickOverlay={closeModal}>
+        <div>
+          <div>
+            <p>印刷確認画面が表示されます。</p>
+            <p>プリンタを選択して、印刷を実行してください</p>
+          </div>
+          <Button
+            color="black"
+            onClick={previewPdf}
+          >
+            はい
+          </Button>
+        </div>
+      </Modal>
+
+      <EditNameModal
+        isOpen={isOpenEditNameModal}
+        selectName={selectNameIndex === null ? '' : names[selectNameIndex]}
+        onClickOkButton={handleClickOkButton}
+        onClickOverlay={closeEditNameModal}
+        onClickCancelButton={closeEditNameModal}
+      />
+
     </div>
   )
 };
