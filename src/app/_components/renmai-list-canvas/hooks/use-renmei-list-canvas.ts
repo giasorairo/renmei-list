@@ -1,14 +1,12 @@
-import { useCallback, useMemo, useRef } from "react";
-import { CANVAS_SIZE, FONT_FAMILY, FONT_SIZE, ROW_SPACE } from "../const";
+import { useCallback, useMemo, useRef, useState } from "react";
+import { FONT_SIZE, ROW_SPACE } from "../const";
 
 type Props = {
   names: string[],
-  onAddNames: () => void,
-  onDeleteNames: () => void,
 }
 
 export const useRenmeiListCanvas = (props: Props) => {
-  const { names, onAddNames, onDeleteNames } = props;
+  const { names } = props;
   const renmeiListCanvasRef = useRef<HTMLCanvasElement>(null);
 
   /**
@@ -17,20 +15,47 @@ export const useRenmeiListCanvas = (props: Props) => {
    * @returns 
    */
   const nameMaxLength = useMemo(() => {
-    console.log('names', names);
     return Math.max(...names.map((name) => name.length));
   }, [names]);
 
   const stagePadding = useMemo(() => {
     const paddingX = 40;
-    const paddingY = 0;
+    const paddingY = (() => {
+      switch (nameMaxLength) {
+        case 4: {
+          return 12;
+        }
+        case 5: {
+          return 10;
+        }
+        case 6: {
+          return 8;
+        }
+        default: {
+          return 10;
+        }
+      }
+    })();
 
     return {
       x: paddingX,
       y: paddingY,
     }
-  }, []);
+  }, [nameMaxLength]);
 
+  const canvasSize = useMemo(() => {
+    const width =
+      (FONT_SIZE * Math.ceil(names.length / 2)) // 行数分のテキストの width
+      + (ROW_SPACE * Math.ceil((names.length / 2) - 1)) // 行間のスペースの width
+      + (stagePadding.x * 2) // 左右の padding
+      + stagePadding.x // 名前と会社名のスペースの width
+      + FONT_SIZE // 会社名の width
+      + ROW_SPACE // 会社名と部署名のスペースの width
+      + FONT_SIZE; // 部署名の width
+    const height = 330;
+    return { width, height }
+  }, [names.length, stagePadding.x]);
+  
   /**
    * 基準となる name の高さを取得する
    * いちばん長い name の高さを基準にしている
@@ -73,14 +98,14 @@ export const useRenmeiListCanvas = (props: Props) => {
     paddingY: number,
   ) => {
     // canvas の width - ((text の横幅 * 表示行) + (space * space の数))
-    const x = CANVAS_SIZE.width - ((FONT_SIZE) * currentColumn + (ROW_SPACE * (currentColumn - 1))) + FONT_SIZE / 2 - paddingX;
-    const y = isFirstRow ? (CANVAS_SIZE.height / 4) + paddingY : (CANVAS_SIZE.height / 4) * 3 - paddingY;
+    const x = canvasSize.width - ((FONT_SIZE) * currentColumn + (ROW_SPACE * (currentColumn - 1))) + FONT_SIZE / 2 - paddingX;
+    const y = isFirstRow ? (canvasSize.height / 4) + paddingY : (canvasSize.height / 4) * 3 - paddingY;
     return { x, y }
-  }, []);
+  }, [canvasSize]);
 
   /** 最後に表示されている name の行番号 */
   const lastNameColumnNumber = useMemo(() => {
-    return Math.floor(names.length / 2) + 1;
+    return Math.ceil(names.length / 2);
   }, [names]);
 
   const lastNamePositionX = useMemo(() => {
@@ -94,6 +119,7 @@ export const useRenmeiListCanvas = (props: Props) => {
     baseNameHeight,
     stagePadding,
     lastNamePositionX,
+    canvasSize,
     getCharacterSpace,
     getNamePosition,
   }

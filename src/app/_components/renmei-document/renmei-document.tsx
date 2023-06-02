@@ -24,17 +24,18 @@ const styles = StyleSheet.create({
 
 type Props = {
   base64Image: string,
+  canvasSize: { width: number, height: number },
 }
 
 export const RenmeiDocument = (props: Props) => {
-  const { base64Image } = props;
+  const { base64Image, canvasSize } = props;
   return (
     <Document>
       {/* A4 = 595 px * 842 px (72 dpi) */}
       <Page size="A4" orientation="landscape">
         <View style={styles.view}>
           {/* eslint-disable-next-line jsx-a11y/alt-text */}
-          <Image src={base64Image} style={styles.image} />
+          <Image src={base64Image} style={{...styles.image, width: canvasSize.width, height: canvasSize.height}} />
         </View>
       </Page>
     </Document>

@@ -1,8 +1,3 @@
-export const CANVAS_SIZE = {
-  width: 500,
-  height: 340,
-};
-
 export const FONT_SIZE = 20;
 
 // いい感じの font family

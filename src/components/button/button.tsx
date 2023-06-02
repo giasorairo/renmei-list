@@ -1,7 +1,7 @@
 import { ButtonHTMLAttributes, useCallback } from "react";
 import styles from './button.module.scss';
 
-type Color = 'black' | 'outlineBlack';
+type Color = 'black' | 'outlineBlack' | 'blue' | 'red';
 
 type Props = {
   children: string,

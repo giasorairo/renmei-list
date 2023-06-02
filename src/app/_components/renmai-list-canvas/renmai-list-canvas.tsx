@@ -1,15 +1,24 @@
 'use client'
 
-import { RefObject, useEffect } from "react";
-import { CANVAS_SIZE, FONT_FAMILY } from "./const";
-import { useRenmeiListCanvas } from "./hooks/use-renmei-list-canvas";
-import { RenmeiListClass } from "./classes/renmei-list-class";
-import { getFont } from "@/utilities/get-font";
-import { useFont } from "./hooks/use-font";
+import { RefObject, useEffect } from 'react';
+import { FONT_FAMILY } from './const';
+import { RenmeiListClass } from './classes/renmei-list-class';
+import { useFont } from './hooks/use-font';
 
 type Props = {
   names: string[],
   canvasRef: RefObject<HTMLCanvasElement>,
+  baseNameHeight: number,
+  stagePadding: { x: number, y: number },
+  lastNamePositionX: number,
+  getCharacterSpace: (name: string) => number,
+  getNamePosition: (
+    currentColumn: number,
+    isEvenNumber: boolean,
+    paddingX: number,
+    paddingY: number,
+  ) => { x: number; y: number; },
+  canvasSize: { width: number, height: number },
   onClickName: (index: number) => void,
   onAddNames: () => void,
   onDeleteNames: () => void,
@@ -20,18 +29,17 @@ export const RenmeiListCanvas = (props: Props) => {
   const {
     names,
     canvasRef,
-    onClickName,
-    onAddNames,
-    onDeleteNames,
-  } = props;
-
-  const {
+    canvasSize,
     baseNameHeight,
     stagePadding,
     lastNamePositionX,
     getCharacterSpace,
     getNamePosition,
-  } = useRenmeiListCanvas({ names, onAddNames, onDeleteNames });
+    onClickName,
+    onAddNames,
+    onDeleteNames,
+  } = props;
+
   const { loaded: loadedFont } = useFont(FONT_FAMILY);
 
   useEffect(() => {
@@ -48,6 +56,7 @@ export const RenmeiListCanvas = (props: Props) => {
     const renmeiList = RenmeiListClass.instance;
     renmeiList.init(
       names,
+      canvasSize,
       getNamePosition,
       baseNameHeight,
       getCharacterSpace,
@@ -55,15 +64,16 @@ export const RenmeiListCanvas = (props: Props) => {
       lastNamePositionX,
       onAddNames,
       onDeleteNames,
+      stagePadding,
     );
-  }, [baseNameHeight, canvasRef, getCharacterSpace, getNamePosition, names, onClickName, stagePadding.x, stagePadding.y, lastNamePositionX, onAddNames, onDeleteNames, loadedFont]);
+  }, [baseNameHeight, canvasRef, getCharacterSpace, getNamePosition, names, onClickName, stagePadding.x, stagePadding.y, lastNamePositionX, onAddNames, onDeleteNames, loadedFont, canvasSize, stagePadding]);
 
   return (
     <canvas
       id="renmei-list-canvas"
-      ref={canvasRef}
-      width={CANVAS_SIZE.width}
-      height={CANVAS_SIZE.height}
+      ref={canvasRef}      
+      width={canvasSize.width}
+      height={canvasSize.height}
     />
   );
 };

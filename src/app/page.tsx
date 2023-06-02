@@ -33,14 +33,27 @@ export default function Home() {
     '山田七郎',
     '山田八郎',
     '',
-    '山田十郎'
+    '山田十郎',
+    '山田十一郎',
+    '山田十二郎',
+    '山田十三郎',
+    '山田十四郎',
+    '山田十五郎',
   ]);
 
   const renmeiListCanvasRef = useRef<HTMLCanvasElement>(null);
 
+  const {
+    baseNameHeight,
+    stagePadding,
+    lastNamePositionX,
+    getCharacterSpace,
+    getNamePosition,
+    canvasSize,
+  } = useRenmeiListCanvas({ names });
   const { handleClickDownloadButton } = useImageDownload(renmeiListCanvasRef);
   const { canvasBase64, convertCanvasToBase64 } = useCanvasToBase64(renmeiListCanvasRef);
-  const { previewPdf } = usePreviewPdf(<RenmeiDocument base64Image={canvasBase64} />);
+  const { previewPdf } = usePreviewPdf(<RenmeiDocument base64Image={canvasBase64} canvasSize={canvasSize} />);
   const { isOpen, openModal, closeModal } = useModal();
   const {
     isOpen: isOpenEditNameModal,
@@ -80,33 +93,49 @@ export default function Home() {
 
   return (
     <div className={styles.page}>
-      <section className={styles['title']}>
+      {/* <section className={styles['title']}>
         <h1>
           名簿作成アプリ
         </h1>
-      </section>
+      </section> */}
       <section className={styles['renmei-list']}>
+        <div
+          className={styles['renmei-list__controller']}
+        >
+          <div className={styles['renmei-list__button-container']}>
+            <Button color='blue' onClick={handleAddNames}>行を追加する</Button>
+            <Button color='red' onClick={handleDeleteNames}>行を削除する</Button>
+            <div className={styles['renmei-list__print-button-container']}>
+              <Button color='black' onClick={handleClickPrint}>印刷する</Button>
+            </div>
+          </div>
+        </div>
         <div
           className={styles['renmei-list__canvas']}
         >
           <RenmeiListCanvas
             names={names}
             canvasRef={renmeiListCanvasRef}
+            canvasSize={canvasSize}
+            baseNameHeight={baseNameHeight}
+            stagePadding={stagePadding}
+            lastNamePositionX={lastNamePositionX}
+            getCharacterSpace={getCharacterSpace}
+            getNamePosition={getNamePosition}
             onClickName={handleClickName}
             onAddNames={handleAddNames}
             onDeleteNames={handleDeleteNames}
           />
         </div>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/list.jpg" alt="" width="500" />
-        <div className={styles['renmei-list__controller']}>
+        {/* <div className={styles['renmei-list__controller']}>
           <Button
             color='black'
             onClick={handleClickPrint}
           >
             印刷する
           </Button>
-        </div>
+        </div> */}
       </section>
 
       <Modal isOpen={isOpen} onClickOverlay={closeModal}>
