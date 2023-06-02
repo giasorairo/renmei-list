@@ -1,6 +1,8 @@
-import { Fonts } from './fonts'
-import './globals.css'
-import { Inter } from 'next/font/google'
+import Head from 'next/head';
+import { Fonts } from './fonts';
+import './globals.css';
+import { Inter } from 'next/font/google';
+import Script from 'next/script';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,7 +19,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Fonts />
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        {children}
+        <Script
+          src="https://code.createjs.com/1.0.0/createjs.min.js"
+          strategy='beforeInteractive'
+        />
+      </body>
     </html>
   )
 }
