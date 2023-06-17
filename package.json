@@ -21,6 +21,7 @@
     "next": "13.4.2",
     "pdfkit": "^0.13.0",
     "pixi.js": "^7.2.4",
+    "puppeteer": "^20.7.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "svg-to-pdfkit": "^0.1.8",

@@ -1,24 +1,26 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import PDFDocument from 'pdfkit';
-import SVGtoPDF from 'svg-to-pdfkit'
+import puppeteer from 'puppeteer';
 
-export default function pdf(req: NextApiRequest, res: NextApiResponse) {
-
-  console.log('req.method', req.method);
+export default async function pdf(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
-    res.status(404).end();
+    res.send(`method is ${req.method}`);
     return;
   }
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
 
-  const doc = new PDFDocument({
-    layout: 'landscape',
-    size: 'A4',
-  });
+  const url = new URL('http://localhost:3000/pdf');
+  url.searchParams.append('names', '山田一郎,山田二郎,山田三郎');
+  url.searchParams.append('company', '株式会社山田印刷');
 
-  const { svg } = req.body;
+  await page.goto(url.toString());
 
-  SVGtoPDF(doc, svg)
-  doc.pipe(res);
-  doc.end();
-  // res.status(200).json({ name: 'jhon' });
+  const pdf = await page.pdf({ format: 'A4', landscape: true });
+  await browser.close();
+
+  res.setHeader('Content-Type', 'application/pdf');
+  res.setHeader('Content-Disposition', 'attachment: filename=output.pdf');
+
+  res.send(pdf);
+  return 
 }

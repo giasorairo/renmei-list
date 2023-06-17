@@ -1,6 +1,6 @@
 'use client'
 
-import { Page, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
+import { Page, View, Document, StyleSheet, Image, Text } from '@react-pdf/renderer';
 
 /** react-pdf は 72 dpi の設定なのでこの値になる */
 const PDF_A4_PIXEL_SIZE = {
@@ -27,6 +27,8 @@ type Props = {
   canvasSize: { width: number, height: number },
 }
 
+const ASPECT = 1 / 3;
+
 export const RenmeiDocument = (props: Props) => {
   const { base64Image, canvasSize } = props;
   return (
@@ -35,7 +37,19 @@ export const RenmeiDocument = (props: Props) => {
       <Page size="A4" orientation="landscape">
         <View style={styles.view}>
           {/* eslint-disable-next-line jsx-a11y/alt-text */}
-          <Image src={base64Image} style={{...styles.image, width: canvasSize.width, height: canvasSize.height}} />
+          <Text>山田</Text>
+          <Text>hoge</Text>
+          <svg viewBox='0 0 100 100'>
+            <rect fill='black' strokeWidth={100} stroke='black' width={100} height={100}></rect>
+          </svg>
+          {/* <Image
+            src={base64Image}
+            style={{
+              ...styles.image,
+              width: canvasSize.width * ASPECT,
+              height: canvasSize.height * ASPECT,
+            }}
+          /> */}
         </View>
       </Page>
     </Document>

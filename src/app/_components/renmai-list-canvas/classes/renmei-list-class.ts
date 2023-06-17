@@ -1,5 +1,6 @@
 import { isEvenNumber } from '@/utilities/is-even-number';
-import { FONT_FAMILY, FONT_SIZE, ROW_SPACE } from '../const';
+import { FONT_SIZE, ROW_SPACE } from '../const';
+import { FontFamily } from '@/app/_hooks/use-font-family';
 
 type CanvasSize = {
   width: number,
@@ -38,13 +39,15 @@ export class RenmeiListClass {
     getCharacterSpace: (text: string) => number,
     onClickName: (index: number) => void,
     lastNamePositionX: number,
-    onAddNames: () => void,
-    onDeleteNames: () => void,
     stagePadding: { x: number, y: number },
+    company: string,
+    onClickCompany: () => void,
+    department: string,
+    onClickDepartment: () => void,
+    fontFamily: FontFamily,
   ) {
     if (this.stage.children.length) {
       this.stage.removeAllChildren();
-      this.addNamesButtonContainer.removeEventListener('click', onAddNames);
     }
 
     this.drawBackground('black', canvasSize);
@@ -56,11 +59,12 @@ export class RenmeiListClass {
       baseNameHeight,
       onClickName,
       stagePadding,
+      fontFamily,
     );
     // this.drawAddNameButton(canvasSize, lastNamePositionX, onAddNames);
     // this.drawDeleteNameButton(canvasSize, lastNamePositionX, onDeleteNames);
-    this.drawCompany(lastNamePositionX, canvasSize, stagePadding);
-    this.drawFellow(lastNamePositionX, canvasSize, stagePadding);
+    this.drawCompany(company, lastNamePositionX, canvasSize, stagePadding, onClickCompany, fontFamily);
+    this.drawDepartment(department, lastNamePositionX, canvasSize, stagePadding, onClickDepartment, fontFamily);
 
     this.stage.addChild(this.addNamesButtonContainer);
     this.stage.update();
@@ -71,10 +75,11 @@ export class RenmeiListClass {
     text: string,
     color: string,
     characterSpace: number,
+    fontFamily: FontFamily,
   ) {
     const container = new createjs.Container();
     [...text].forEach((char, index) => {
-      const text = new createjs.Text(char, `${FONT_SIZE}px ${FONT_FAMILY}`, color);
+      const text = new createjs.Text(char, `bold ${FONT_SIZE}px ${fontFamily}`, color);
       text.y = (FONT_SIZE * (index)) + (characterSpace * index);
       container.addChild(text);
     });
@@ -120,6 +125,7 @@ export class RenmeiListClass {
     baseNameHeight: number,
     onClickName: (index: number) => void,
     stagePadding: { x: number, y: number },
+    fontFamily: FontFamily,
   ) {
     names.forEach((name, index) => {
       this.drawName(
@@ -130,6 +136,7 @@ export class RenmeiListClass {
         baseNameHeight,
         onClickName,
         stagePadding,
+        fontFamily,
       );
     });
   }
@@ -147,6 +154,7 @@ export class RenmeiListClass {
     baseNameHeight: number,
     onClickName: (index: number) => void,
     stagePadding: { x: number, y: number },
+    fontFamily: FontFamily,
   ) {
     const currentColumn = Math.floor(index / 2) + 1;
     const namePosition = getNamePosition(currentColumn, isEvenNumber(index), stagePadding.x, stagePadding.y);
@@ -154,10 +162,11 @@ export class RenmeiListClass {
       name,
       '#000',
       getCharacterSpace(name),
+      fontFamily,
     );
     // イベント検知用の rect 描画
     const rect = new createjs.Shape();
-    rect.graphics.beginFill('black');
+    rect.graphics.beginFill('white');
     rect.graphics.drawRect(
       0,
       0,
@@ -276,71 +285,74 @@ export class RenmeiListClass {
   };
 
   drawCompany(
+    company: string,
     lastNamePositionX: number,
     canvasSize: CanvasSize,
     stagePadding: { x: number, y: number },
+    onClickCompany: () => void,
+    fontFamily: FontFamily,
   ) {
-    const text = '株式会社エイロネイア';
     const characterSpace = 4;
-    const companyContainer = this.drawTategakiText('株式会社エイロネイア', '#000', characterSpace);
+    const companyContainer = this.drawTategakiText(company, '#000', characterSpace, fontFamily);
     // イベント検知用の rect 描画
     const rect = new createjs.Shape();
-    rect.graphics.beginFill('black');
+    rect.graphics.beginFill('white');
+    // company が 空のときもクリック領域を確保するために company が表示されている列を埋めるように配置
     rect.graphics.drawRect(
       0,
-      0,
+      -canvasSize.height,
       FONT_SIZE,
-      100,
+      canvasSize.height * 2,
     );
     rect.alpha = 0.01;
 
-    const baseNameHeight = (FONT_SIZE * text.length) + (characterSpace * (text.length - 1));
-    const namePosition = { x: lastNamePositionX - stagePadding.x - FONT_SIZE, y: canvasSize.height / 2 };
+    const baseNameHeight = (FONT_SIZE * company.length) + (characterSpace * (company.length - 1));
+    const companyPosition = { x: lastNamePositionX - stagePadding.x - FONT_SIZE, y: canvasSize.height / 2 };
     // textContainer 描画
     companyContainer.regX = FONT_SIZE / 2;
     companyContainer.regY = baseNameHeight / 2;
-    companyContainer.x = namePosition.x;
-    companyContainer.y = namePosition.y;
+    companyContainer.x = companyPosition.x;
+    companyContainer.y = companyPosition.y;
     companyContainer.addChild(rect);
     companyContainer.addEventListener('click', () => {
-      console.log('click company');
-      // onClickName(index);
+      onClickCompany();
     });
     this.stage.addChild(companyContainer);
   }
 
-  drawFellow(
+  drawDepartment(
+    department: string,
     lastNamePositionX: number,
     canvasSize: CanvasSize,
     stagePadding: { x: number, y: number },
+    onClickDepartment: () => void,
+    fontFamily: FontFamily,
   ) {
-    const text = '開発部一同';
     const characterSpace = 4;
-    const companyContainer = this.drawTategakiText(text, '#000', characterSpace);
+    const companyContainer = this.drawTategakiText(department, '#000', characterSpace, fontFamily);
     // イベント検知用の rect 描画
     const rect = new createjs.Shape();
-    rect.graphics.beginFill('black');
+    rect.graphics.beginFill('white');
     rect.graphics.drawRect(
       0,
-      0,
+      -canvasSize.height,
       FONT_SIZE,
-      100,
+      canvasSize.height * 2,
     );
     rect.alpha = 0.01;
 
-    const baseNameHeight = (FONT_SIZE * text.length) + (characterSpace * (text.length - 1));
+    const baseNameHeight = (FONT_SIZE * department.length) + (characterSpace * (department.length - 1));
     const companyPositionX = lastNamePositionX - stagePadding.x - FONT_SIZE;
-    const fellowPositionX = companyPositionX - ROW_SPACE - FONT_SIZE;
-    const namePosition = { x: fellowPositionX, y: (canvasSize.height / 4) * 3 };
+    const departmentPositionX = companyPositionX - ROW_SPACE - FONT_SIZE;
+    const departmentPosition = { x: departmentPositionX, y: (canvasSize.height / 4) * 3 - (FONT_SIZE * 1) };
     // textContainer 描画
     companyContainer.regX = FONT_SIZE / 2;
     companyContainer.regY = baseNameHeight / 2;
-    companyContainer.x = namePosition.x;
-    companyContainer.y = namePosition.y;
+    companyContainer.x = departmentPosition.x;
+    companyContainer.y = departmentPosition.y;
     companyContainer.addChild(rect);
     companyContainer.addEventListener('click', () => {
-      console.log('click company');
-      // onClickName(index);
+      onClickDepartment();
     });
     this.stage.addChild(companyContainer);
   }
