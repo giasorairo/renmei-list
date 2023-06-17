@@ -7,7 +7,7 @@ export const useFont = (fontFamily: string) => {
   const [loaded, setLoaded] = useState(false);
   
   useDidmount(async () =>  {
-    await getFont(fontFamily);
+    // await getFont(fontFamily);
     setLoaded(true);
   });
 

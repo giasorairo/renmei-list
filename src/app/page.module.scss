@@ -11,17 +11,22 @@
 .renmei-list__canvas {
   display: flex;
   padding: 0 8px;
-  overflow-x: scroll;
   align-items: center;
   flex-grow: 1;
-  background-color: #ddd;
+  background-color: rgb(89, 97, 111);
+  overflow-x: scroll;
 
   canvas {
+    margin: 4px;
     height: calc(inherit - 8px);
     max-height: 400px;
     margin: 0 auto;
     background-color: #fff;
   }
+}
+
+.renmei-list__select {
+  padding: 8px;
 }
 
 .renmei-list__controller {
@@ -37,7 +42,7 @@
   flex-direction: column;
   gap: 12px;
   display: flex;
-  align-items: end;
+  align-items: center;
   justify-content: center;
 }
 

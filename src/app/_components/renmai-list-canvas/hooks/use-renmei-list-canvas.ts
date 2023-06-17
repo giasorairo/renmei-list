@@ -53,7 +53,7 @@ export const useRenmeiListCanvas = (props: Props) => {
       + ROW_SPACE // 会社名と部署名のスペースの width
       + FONT_SIZE; // 部署名の width
     const height = 330;
-    return { width, height }
+    return { width, height: height * 2 }
   }, [names.length, stagePadding.x]);
   
   /**

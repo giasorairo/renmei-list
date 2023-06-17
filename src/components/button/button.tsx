@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, useCallback } from "react";
+import { ButtonHTMLAttributes } from "react";
 import styles from './button.module.scss';
 
 type Color = 'black' | 'outlineBlack' | 'blue' | 'red';

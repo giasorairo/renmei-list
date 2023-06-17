@@ -1,9 +1,14 @@
 'use client'
 
-import { RefObject, useEffect } from 'react';
+import { RefObject, useEffect, useState } from 'react';
 import { FONT_FAMILY } from './const';
 import { RenmeiListClass } from './classes/renmei-list-class';
 import { useFont } from './hooks/use-font';
+import { FontFamily } from '@/app/_hooks/use-font-family';
+
+const sleep = (waitTimeMS: number) => new Promise((resolve) => {
+  setTimeout(resolve, waitTimeMS);
+});
 
 type Props = {
   names: string[],
@@ -20,8 +25,12 @@ type Props = {
   ) => { x: number; y: number; },
   canvasSize: { width: number, height: number },
   onClickName: (index: number) => void,
-  onAddNames: () => void,
-  onDeleteNames: () => void,
+  company: string,
+  onClickCompany: () => void,
+  department: string,
+  onClickDepartment: () => void,
+  isLoadedFontFamily: boolean,
+  fontFamily: FontFamily,
 };
 
 export const RenmeiListCanvas = (props: Props) => {
@@ -36,13 +45,25 @@ export const RenmeiListCanvas = (props: Props) => {
     getCharacterSpace,
     getNamePosition,
     onClickName,
-    onAddNames,
-    onDeleteNames,
+    company,
+    onClickCompany,
+    department,
+    onClickDepartment,
+    isLoadedFontFamily,
+    fontFamily,
   } = props;
 
   const { loaded: loadedFont } = useFont(FONT_FAMILY);
 
+  const [isFontLoaded, setIsFontLoaded] = useState(false);
   useEffect(() => {
+    document.fonts.load('20px MyCustomFont').then(() => {
+      setIsFontLoaded(true);
+    });
+  }, []);
+
+  useEffect(() => {
+
     if (!canvasRef.current) {
       console.error('canvas is null !!');
       return;
@@ -50,6 +71,14 @@ export const RenmeiListCanvas = (props: Props) => {
 
     if (!loadedFont) {
       console.info('font is loading !!');
+      return;
+    }
+
+    if (!isFontLoaded) {
+      return;
+    }
+
+    if (!isLoadedFontFamily) {
       return;
     }
 
@@ -62,11 +91,14 @@ export const RenmeiListCanvas = (props: Props) => {
       getCharacterSpace,
       onClickName,
       lastNamePositionX,
-      onAddNames,
-      onDeleteNames,
       stagePadding,
+      company,
+      onClickCompany,
+      department,
+      onClickDepartment,
+      fontFamily,
     );
-  }, [baseNameHeight, canvasRef, getCharacterSpace, getNamePosition, names, onClickName, stagePadding.x, stagePadding.y, lastNamePositionX, onAddNames, onDeleteNames, loadedFont, canvasSize, stagePadding]);
+  }, [baseNameHeight, canvasRef, canvasSize, company, department, fontFamily, getCharacterSpace, getNamePosition, isFontLoaded, isLoadedFontFamily, lastNamePositionX, loadedFont, names, onClickCompany, onClickDepartment, onClickName, stagePadding]);
 
   return (
     <canvas
