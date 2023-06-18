@@ -1,27 +1,16 @@
 'use client'
 
-import { useSearchParams } from "next/navigation";
-import { useMemo } from "react";
+import { useSearchParams } from 'next/navigation';
+import style from './page.module.scss';
+import { RenmeiPdf } from '@/components/renmai-pdf/renmei-pdf';
+import { usePdfValue } from './_hooks/use-pdf-value';
 
 export default function Pdf() {
-  const searchParams = useSearchParams();
-
-  const names = useMemo<string[]>(() => {
-    return searchParams?.get('names')?.split(',') ?? [];
-  }, [searchParams]);
-
-  const company = useMemo<string>(() => {
-    return searchParams?.get('company') ?? '';
-  }, [searchParams]);
+  const { names, company, department } = usePdfValue();
 
   return (
-    <div>
-      <div>
-        {names.map((name, key) => (
-          <div key={key}>{name}</div>
-        ))}
-      </div>
-      <div>{company}</div>
+    <div className={style.page}>
+      <RenmeiPdf names={names} company={company} department={department}  />
     </div>
   );
 }

@@ -3,7 +3,7 @@
 import { RefObject, useEffect, useState } from 'react';
 import { FONT_FAMILY } from './const';
 import { RenmeiListClass } from './classes/renmei-list-class';
-import { useFont } from './hooks/use-font';
+import { useFont } from '../../../hooks/use-font';
 import { FontFamily } from '@/app/_hooks/use-font-family';
 
 const sleep = (waitTimeMS: number) => new Promise((resolve) => {

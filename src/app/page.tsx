@@ -123,13 +123,7 @@ export default function Home() {
   }, [selectNameIndex, names, closeEditNameModal, setNames]);
 
   useEffect(() => {
-    fetch('/api/pdf', {
-      method: 'POST',
-    })
-      .then((res) => res.blob())
-      .then(async (blob) => {
-        download(blob, 'download.pdf');
-      });
+    
   }, []);
 
   return (
