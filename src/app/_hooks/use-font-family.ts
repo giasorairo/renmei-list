@@ -27,6 +27,10 @@ export const fontFamilies: FontFamily[] = [
     name: 'noto-serif-jp',
     src: '/fonts/NotoSerifJP-Regular.otf',
   },
+  {
+    name: 'shippori-mincho-bold',
+    src: '/fonts/ShipporiMincho-Bold.ttf',
+  }
 ];
 
 export const useFontFamily = () => {

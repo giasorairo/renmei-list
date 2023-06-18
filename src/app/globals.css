@@ -28,3 +28,8 @@
   font-family: 'noto-serif-jp';
   src: url('/fonts/NotoSerifJP-Regular.otf');
 }
+
+@font-face {
+  font-family: 'shippori-mincho-bold';
+  src: url('/fonts/ShipporiMincho-Bold.ttf');
+}
