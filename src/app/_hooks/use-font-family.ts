@@ -1,15 +1,36 @@
 import { useDidmount } from '@/hooks/use-didmount';
 import { useCallback, useEffect, useState } from 'react';
 
-export type FontFamily = 'shokaki-sarari' | 'kouzan-mouhitu';
+export type FontFamily = {
+  name: string,
+  src: string,
+};
 
-export const FONT_FAMILY: FontFamily[] = [
-  "shokaki-sarari",
-  "kouzan-mouhitu",
+export const fontFamilies: FontFamily[] = [
+  {
+    name: 'kouzan-mouhitu',
+    src: '/fonts/kouzan-mouhitu.otf',
+  },
+  {
+    name: 'shokaki-sarari',
+    src: '/fonts/shokaki-sarari.ttf',
+  },
+  {
+    name: 'stick',
+    src: '/fonts/Stick-Regular.ttf',
+  },
+  {
+    name: 'yuji-syuku',
+    src: '/fonts/YujiSyuku-Regular.ttf',
+  },
+  {
+    name: 'noto-serif-jp',
+    src: '/fonts/NotoSerifJP-Regular.otf',
+  },
 ];
 
 export const useFontFamily = () => {
-  const [fontFamily, setFontFamily] = useState<FontFamily>('shokaki-sarari');
+  const [fontFamily, setFontFamily] = useState<FontFamily>(fontFamilies[0]);
   const [isLoaded, setIsLoaded] = useState(false);
 
   const changeFontFamily = useCallback((value: FontFamily) => {
@@ -17,12 +38,16 @@ export const useFontFamily = () => {
   }, []);
 
   const handleSelectFontFamily = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
-    setFontFamily(e.target.value as FontFamily);
+    const selectFontFamily = fontFamilies.find((_fontFamily) => _fontFamily.name === e.target.value);
+    if (!selectFontFamily) {
+      return;
+    }
+    setFontFamily(selectFontFamily);
   }, []);
 
   useEffect(() => {
     setIsLoaded(false);
-    document.fonts.load(`20px ${fontFamily}`).then(() => {
+    document.fonts.load(`20px ${fontFamily.name}`).then(() => {
       setIsLoaded(true);
     });
   }, [fontFamily]);

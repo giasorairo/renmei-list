@@ -10,11 +10,12 @@ import { EditCompanyModal } from './_components/modals/edit-company-modal/edit-c
 import { useCompany } from './_hooks/use-company';
 import { useDepartment } from './_hooks/use-department';
 import { EditDepartmentModal } from './_components/modals/edit-department-modal/edit-department-modal';
-import { FONT_FAMILY, useFontFamily } from './_hooks/use-font-family';
+import { useFontFamily } from './_hooks/use-font-family';
 import { RenmeiList } from '@/components/renmai-list/renmei-list';
 import { usePdf } from './_hooks/use-pdf';
 import { PrintModal } from './_components/modals/print-modal/print-modal';
 import { RenmeiDocument } from '@/components/renmei-document.tsx/renmei-document';
+import { fontFamilies } from './_hooks/use-font-family';
 
 export default function Home() {
 
@@ -37,7 +38,7 @@ export default function Home() {
     '',
   ]);
 
-  const { fontFamily, isLoaded: isLoadedFontFamily, handleSelectFontFamily } = useFontFamily();
+  const { fontFamily, handleSelectFontFamily, isLoaded } = useFontFamily();
   const { isOpen, openModal, closeModal } = useModal();
   const {
     isOpen: isOpenEditNameModal,
@@ -101,8 +102,8 @@ export default function Home() {
   }, [selectNameIndex, names, closeEditNameModal, setNames]);
 
   const handleClickPrintOkButton = useCallback(() => {
-    printPdf(<RenmeiDocument names={names} company={company} department={department} />)
-  }, [company, department, names, printPdf]);
+    printPdf(<RenmeiDocument names={names} company={company} department={department} fontFamily={fontFamily} />)
+  }, [company, department, fontFamily, names, printPdf]);
 
   return (
     <div className={styles.page}>
@@ -110,8 +111,8 @@ export default function Home() {
         <div className={styles['renmei-list__controller']}>
           <div className={styles['renmei-list__button-container']}>
             <select className={styles['renmei-list__select']} onChange={handleSelectFontFamily}>
-              {FONT_FAMILY.map((font, i) => (
-                <option key={`font-option-${i}`} value={font}>{font}</option>
+              {fontFamilies.map((_fontFamily, i) => (
+                <option key={`font-option-${i}`} value={_fontFamily.name}>{_fontFamily.name}</option>
               ))}
             </select>
             <Button
@@ -146,6 +147,7 @@ export default function Home() {
                 onClickName={handleClickName}
                 onClickCompany={openEditCompanyModal}
                 onClickDepartment={openEditDepartmentModal}
+                fontFamily={fontFamily.name}
               />
             </div>
           </div>
