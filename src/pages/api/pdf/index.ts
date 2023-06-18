@@ -9,7 +9,7 @@ type Payload = {
 
 export default async function pdf(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
-    res.send(`method is ${req.method}`);
+    res.send(`error: method is ${req.method}`);
     return;
   }
   const browser = await puppeteer.launch({ headless: 'new' });
@@ -17,7 +17,12 @@ export default async function pdf(req: NextApiRequest, res: NextApiResponse) {
 
   const payload = JSON.parse(req.body) as Payload;
 
-  const BASE_URL = 'http://localhost:3000/pdf';
+  const BASE_URL = process.env.PDF_BASE_URL || '';
+
+  if (BASE_URL) {
+    res.send(`error: pdf url is ${BASE_URL} !!`);
+    return;
+  }
 
   const url = new URL(BASE_URL);
   url.searchParams.append('names', payload.names.join(','));

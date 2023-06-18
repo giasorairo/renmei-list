@@ -48,6 +48,7 @@ export const EditNameModal = (props: Props) => {
               type="text"
               value={name}
               onChange={handleChangeName}
+              placeholder='名前を入力'
             />
           </div>
           <div className={style['edit-name-modal__controller']}>

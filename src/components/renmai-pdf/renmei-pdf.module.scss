@@ -36,14 +36,37 @@ $font-size: 24px;
 .names__name {
   display: flex;
   justify-content: space-between;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(0, 0, 255, 0.2);
+  }
+}
+
+.names__empty-name {
+  cursor: pointer;
+  &:hover {
+    background-color: rgba(0, 0, 255, 0.2);
+  }
+  &[data-is-edit="true"] {
+    border: 1px solid black;
+  }
 }
 
 .company {
   justify-self: end;
-  margin-left: 8px;
+  margin-left: 12px;
   margin-bottom: $font-size * 2;
+  cursor: pointer;
+  &:hover {
+    background-color: rgba(0, 0, 255, 0.2);
+  }
 }
 
 .department {
   justify-self: end;
+  cursor: pointer;
+  &:hover {
+    background-color: rgba(0, 0, 255, 0.2);
+  }
 }

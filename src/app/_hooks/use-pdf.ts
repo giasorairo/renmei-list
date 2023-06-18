@@ -1,14 +1,15 @@
 import { download } from "@/utilities/download";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 
-type Parameter = {
-  names: string[],
-  company: string,
-  department: string,
+const preview = (blob: Blob) => {
+  const url = URL.createObjectURL(blob);
+  window.open(url);
 };
 
-const usePdf = (names: string[], company: string, department: string) => {
-  const fetchPdf = useCallback(() => {
+export const usePdf = (names: string[], company: string, department: string) => {
+  const [loading, setLoading] = useState(false);
+
+  const downloadPdf = useCallback(() => {
     fetch('/api/pdf', {
       method: 'POST',
       body: JSON.stringify({ names, company, department }),
@@ -19,5 +20,19 @@ const usePdf = (names: string[], company: string, department: string) => {
       });
   }, [company, department, names]);
 
-  return { fetchPdf };
+  const printPdf = useCallback(async () => {
+    setLoading(true);
+    await fetch('/api/pdf', {
+      method: 'POST',
+      body: JSON.stringify({ names, company, department }),
+    })
+      .then((res) => res.blob())
+      .then(async (blob) => {
+        preview(blob);
+      })
+      .catch(() => {});
+    setLoading(false);
+  }, [company, department, names]);
+
+  return { downloadPdf, printPdf, loading };
 };

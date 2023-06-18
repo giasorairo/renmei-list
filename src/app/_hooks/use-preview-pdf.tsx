@@ -1,9 +1,8 @@
-import { pdf } from '@react-pdf/renderer';
-import { ReactElement, useCallback } from 'react';
 
-export const usePreviewPdf = (Document: ReactElement) => {
+import { useCallback } from 'react';
+
+export const usePreviewPdf = (blob: Blob) => {
   const previewPdf = useCallback(async () => {
-    const blob = await pdf(Document).toBlob();
     const url = URL.createObjectURL(blob);
 
     const previewWindow = window.open(url, 'previewWindow');
@@ -14,7 +13,7 @@ export const usePreviewPdf = (Document: ReactElement) => {
     previewWindow.addEventListener('load', () => {
       previewWindow.print();
     });
-  }, [Document]);
+  }, [blob]);
 
   return { previewPdf };
 };

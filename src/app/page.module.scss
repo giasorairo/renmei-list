@@ -8,21 +8,30 @@
   height: 100lvh;
 }
 
-.renmei-list__canvas {
-  display: flex;
-  padding: 0 8px;
+.renmei-list-container {
+  background-color: rgb(89, 97, 111);
+  display: grid;
+  place-items: center;
+  flex-grow: 1;
+  overflow-x: hidden;
+  font-family: 'kouzan-mouhitu';
+}
+
+.renmei-list__pdf {
+  display: grid;
+  box-sizing: border-box;
+  padding: 0 20px;
   align-items: center;
   flex-grow: 1;
-  background-color: rgb(89, 97, 111);
-  overflow-x: scroll;
+  overflow-x: hidden;
 
-  canvas {
-    margin: 4px;
-    height: calc(inherit - 8px);
-    max-height: 400px;
-    margin: 0 auto;
-    background-color: #fff;
+  > div {
+    background-color: white;
   }
+}
+
+.renmei-list__scroll-container {
+  overflow-x: scroll;
 }
 
 .renmei-list__select {
@@ -30,7 +39,8 @@
 }
 
 .renmei-list__controller {
-  min-width: 160px;
+  flex-shrink: 0;
+  padding: 0 32px;
   display: flex;
   justify-content: center;
   align-items: center;
