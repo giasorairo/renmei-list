@@ -1,5 +1,9 @@
+const puppeteer = process.env.AWS_LAMBDA_FUNCTION_VERSION
+  ? require('puppeteer-core')
+  : require('puppeteer');
+
 import { NextApiRequest, NextApiResponse } from 'next';
-import puppeteer from 'puppeteer';
+import chromium from 'chrome-aws-lambda';
 
 type Payload = {
   names: string[],
@@ -12,7 +16,13 @@ export default async function pdf(req: NextApiRequest, res: NextApiResponse) {
     res.send(`error: method is ${req.method}`);
     return;
   }
-  const browser = await puppeteer.launch({ headless: 'new' });
+
+  const browser = await puppeteer.launch({
+    args: chromium.args,
+    defaultViewport: chromium.defaultViewport,
+    executablePath: await chromium.executablePath,
+    headless: chromium.headless,
+  });
   const page = await browser.newPage();
 
   const payload = JSON.parse(req.body) as Payload;
@@ -31,7 +41,7 @@ export default async function pdf(req: NextApiRequest, res: NextApiResponse) {
 
   await page.goto(url.toString());
 
-  const pdf = await page.pdf({ format: 'A4', landscape: true });
+  const pdf = await page.pdf({ format: 'a4', landscape: true });
   await browser.close();
 
   res.setHeader('Content-Type', 'application/pdf');
