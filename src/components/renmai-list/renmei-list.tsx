@@ -10,6 +10,7 @@ type Props = {
   onClickName?: (index: number) => void,
   onClickCompany?: () => void,
   onClickDepartment?: () => void,
+  fontFamily: string,
 };
 
 export const RenmeiList: FC<Props> = ({
@@ -19,9 +20,10 @@ export const RenmeiList: FC<Props> = ({
   onClickName,
   onClickCompany,
   onClickDepartment,
+  fontFamily,
 }) => {
   return (
-    <div className={style.RenmaiList}>
+    <div className={style.RenmaiList} style={{ fontFamily }}　>
       <div className={style.names}>
         <div className={style.names__row}>
           {names

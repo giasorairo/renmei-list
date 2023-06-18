@@ -2,12 +2,15 @@ import React, { FC, useMemo } from 'react';
 import { Page, Text, View, Document, StyleSheet, Font } from '@react-pdf/renderer';
 import { isEvenNumber } from '@/utilities/is-even-number';
 import { isOddNumber } from '@/utilities/is-odd-number';
+import { FontFamily, fontFamilies } from '@/app/_hooks/use-font-family';
 
 const FONT_SIZE = 20;
 
-Font.register({
-  family: 'kouzan-mouhitu',
-  src: '/fonts/kouzan-mouhitu.otf',
+fontFamilies.forEach((_fontFamily) => {
+  Font.register({
+    family: _fontFamily.name,
+    src: _fontFamily.src,
+  });
 });
 
 
@@ -74,6 +77,7 @@ type Props = {
   names: string[],
   company: string,
   department: string,
+  fontFamily: FontFamily,
 }
 
 // PDFドキュメントを作成します
@@ -81,27 +85,28 @@ export const RenmeiDocument: FC<Props> = ({
   names,
   company,
   department,
+  fontFamily,
 }) => {
   const maxLengthName = useMemo(() => Math.max(...names.map((name) => name.length)), [names]);
   return (
     <Document>
       <Page size={[841.89, 595.28]} style={styles.page}>
         <View style={styles.container}>
-          <View style={styles.department}>
+          <View style={{ ...styles.department, fontFamily:  fontFamily.name}}>
             {department.split('').map((char, key) => (<Text key={key}>{char}</Text>))}
           </View>
-          <View style={styles.company}>
+          <View style={{ ...styles.company, fontFamily:  fontFamily.name }}>
             {company.split('').map((char, key) => (<Text key={key}>{char}</Text>))}
           </View>
           <View style={styles.namesContainer}>
-            <View style={styles.namesRowContainer}>
+            <View style={{ ...styles.namesRowContainer }}>
               {names
                 .filter((_, i) => isEvenNumber(i))
                 .reverse()
                 .map((name, nameKey) => (
                   name
                     ? (
-                      <View key={nameKey} style={{...styles.nameContainer, height: FONT_SIZE * maxLengthName}}>
+                      <View key={nameKey} style={{...styles.nameContainer, height: FONT_SIZE * maxLengthName, fontFamily:  fontFamily.name }}>
                         {name.split('').map((char, charKey) => <Text key={charKey}>{char}</Text>)}
                       </View>
                     )
@@ -116,14 +121,14 @@ export const RenmeiDocument: FC<Props> = ({
                 ))
               }
             </View>
-            <View style={styles.namesRowContainer}>
+            <View style={{ ...styles.namesRowContainer }}>
               {names
                 .filter((_, i) => isOddNumber(i))
                 .reverse()
                 .map((name, nameKey) => (
                   name
                     ? (
-                      <View key={nameKey} style={{...styles.nameContainer, height: FONT_SIZE * maxLengthName}}>
+                      <View key={nameKey} style={{...styles.nameContainer, height: FONT_SIZE * maxLengthName, fontFamily:  fontFamily.name }}>
                         {name.split('').map((char, charKey) => <Text key={charKey}>{char}</Text>)}
                       </View>
                     )
