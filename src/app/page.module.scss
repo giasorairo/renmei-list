@@ -1,0 +1,64 @@
+.title {
+  padding: 8px;
+  text-align: center;
+}
+
+.renmei-list {
+  display: flex;
+  height: 100lvh;
+}
+
+.renmei-list-container {
+  background-color: rgb(89, 97, 111);
+  display: grid;
+  place-items: center;
+  flex-grow: 1;
+  overflow-x: hidden;
+  font-family: 'kouzan-mouhitu';
+}
+
+.renmei-list__pdf {
+  display: grid;
+  box-sizing: border-box;
+  padding: 0 20px;
+  align-items: center;
+  flex-grow: 1;
+  overflow-x: hidden;
+
+  > div {
+    background-color: white;
+  }
+}
+
+.renmei-list__scroll-container {
+  overflow-x: scroll;
+}
+
+.renmei-list__select {
+  padding: 8px;
+}
+
+.renmei-list__controller {
+  flex-shrink: 0;
+  padding: 0 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.renmei-list__button-container {
+  height: calc(inherit - 8px);
+  max-height: 400px;
+  flex-direction: column;
+  gap: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.renmei-list__print-button-container {
+  margin-top: 20px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}

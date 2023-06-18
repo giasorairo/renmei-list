@@ -1,0 +1,15 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+@font-face {
+  font-family: 'kouzan-mouhitu';
+  src: url('/fonts/kouzan-mouhitu.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'shokaki-sarari';
+  src: url('/fonts/shokaki-sarari.ttf') format('opentype');
+}
