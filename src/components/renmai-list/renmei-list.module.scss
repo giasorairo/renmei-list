@@ -1,22 +1,14 @@
 $font-size: 24px;
 
-.page {
-  width: 100dvw;
-  height: 100dvh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'kouzan-mouhitu';
-  // font-family: 'shokaki-sarari';
-}
-
-.pdfContainer {
+.RenmaiList {
   display: grid;
   font-size: $font-size;
   box-sizing: border-box;
   border: 1px solid black;
   padding: 40px;
   writing-mode: vertical-rl;
+  font-family: 'kouzan-mouhitu';
+  // font-family: 'shokaki-sarari';
 }
 
 .names {

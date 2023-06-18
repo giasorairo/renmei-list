@@ -1,11 +1,8 @@
 'use client'
 
 import styles from './page.module.scss';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Button } from '@/components/button/button';
-import { useCanvasToBase64 } from './_hooks/use-canvas-to-base64';
-import { usePreviewPdf } from './_hooks/use-preview-pdf';
-import { Modal } from '@/components/modal/modal';
 import { useModal } from '@/components/modal/hooks/use-modal';
 import { EditNameModal } from './_components/modals/edit-name-modal/edit-name-modal';
 import { isEvenNumber } from '@/utilities/is-even-number';
@@ -14,8 +11,7 @@ import { useCompany } from './_hooks/use-company';
 import { useDepartment } from './_hooks/use-department';
 import { EditDepartmentModal } from './_components/modals/edit-department-modal/edit-department-modal';
 import { FONT_FAMILY, useFontFamily } from './_hooks/use-font-family';
-import { useImageDownload } from './_hooks/use-download';
-import { RenmeiPdf } from '@/components/renmai-pdf/renmei-pdf';
+import { RenmeiList } from '@/components/renmai-list/renmei-list';
 import { usePdf } from './_hooks/use-pdf';
 import { PrintModal } from './_components/modals/print-modal/print-modal';
 
@@ -40,10 +36,6 @@ export default function Home() {
     '',
   ]);
 
-  const renmeiListCanvasRef = useRef<HTMLCanvasElement>(null);
-
-  const { canvasBase64, convertCanvasToBase64 } = useCanvasToBase64(renmeiListCanvasRef);
-  const { handleClickDownloadButton } = useImageDownload(renmeiListCanvasRef);
   const { fontFamily, isLoaded: isLoadedFontFamily, handleSelectFontFamily } = useFontFamily();
   const { isOpen, openModal, closeModal } = useModal();
   const {
@@ -88,9 +80,8 @@ export default function Home() {
   }, [names]);
 
   const handleClickPrint = useCallback(() => {
-    convertCanvasToBase64();
     openModal();
-  }, [convertCanvasToBase64, openModal]);
+  }, [openModal]);
 
   const [selectNameIndex, setSelectNameIndex] = useState<number | null>(null);
   const handleClickName = useCallback((index: number) => {
@@ -143,7 +134,7 @@ export default function Home() {
         <div className={styles['renmei-list-container']}>
           <div className={styles['renmei-list__pdf']}>
             <div className={styles['renmei-list__scroll-container']}>
-              <RenmeiPdf
+              <RenmeiList
                 names={names}
                 company={company}
                 department={department}

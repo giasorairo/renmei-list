@@ -17,9 +17,9 @@ export default async function pdf(req: NextApiRequest, res: NextApiResponse) {
 
   const payload = JSON.parse(req.body) as Payload;
 
-  const BASE_URL = process.env.PDF_BASE_URL || '';
+  const BASE_URL = process.env.PDF_BASE_URL;
 
-  if (BASE_URL) {
+  if (!BASE_URL) {
     res.send(`error: pdf url is ${BASE_URL} !!`);
     return;
   }

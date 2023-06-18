@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import style from './renmei-pdf.module.scss';
+import style from './renmei-list.module.scss';
 import { isOddNumber } from '@/utilities/is-odd-number';
 import { isEvenNumber } from '@/utilities/is-even-number';
 
@@ -12,7 +12,7 @@ type Props = {
   onClickDepartment?: () => void,
 };
 
-export const RenmeiPdf: FC<Props> = ({
+export const RenmeiList: FC<Props> = ({
   names,
   company,
   department,
@@ -21,7 +21,7 @@ export const RenmeiPdf: FC<Props> = ({
   onClickDepartment,
 }) => {
   return (
-    <div className={style.pdfContainer}>
+    <div className={style.RenmaiList}>
       <div className={style.names}>
         <div className={style.names__row}>
           {names

@@ -1,6 +1,6 @@
 import { ButtonHTMLAttributes } from "react";
 import styles from './button.module.scss';
-import { Spinner } from "../spinner/spiner";
+import { Spinner } from "../spiner/spiner";
 
 type Color = 'black' | 'outlineBlack' | 'blue' | 'red';
 
