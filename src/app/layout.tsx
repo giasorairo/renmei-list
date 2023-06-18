@@ -17,14 +17,17 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="ja">
       <Fonts />
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Kaisei+HarunoUmi&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="fonts/fonts.css" />
+      </head>
       <body className={inter.className}>
         {children}
-        <Script
-          src="https://code.createjs.com/1.0.0/createjs.min.js"
-          strategy='beforeInteractive'
-        />
       </body>
     </html>
   )

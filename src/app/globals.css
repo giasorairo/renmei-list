@@ -13,3 +13,18 @@
   font-family: 'shokaki-sarari';
   src: url('/fonts/shokaki-sarari.ttf') format('opentype');
 }
+
+@font-face {
+  font-family: 'stick';
+  src: url('/fonts/Stick-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'yuji-syuku';
+  src: url('/fonts/YujiSyuku-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'noto-serif-jp';
+  src: url('/fonts/NotoSerifJP-Regular.otf');
+}
