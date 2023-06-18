@@ -14,6 +14,7 @@ import { FONT_FAMILY, useFontFamily } from './_hooks/use-font-family';
 import { RenmeiList } from '@/components/renmai-list/renmei-list';
 import { usePdf } from './_hooks/use-pdf';
 import { PrintModal } from './_components/modals/print-modal/print-modal';
+import { RenmeiDocument } from '@/components/renmei-document.tsx/renmei-document';
 
 export default function Home() {
 
@@ -70,7 +71,7 @@ export default function Home() {
     setNames((prev) => [...prev, '', '']);
   }, []);
 
-  const { printPdf, loading: loadingPdf } = usePdf(names, company, department);
+  const { printPdf } = usePdf(names, company, department);
 
   const handleDeleteNames = useCallback(() => {
     const deleteNameCount = isEvenNumber(names.length) ? 2 :  1;
@@ -98,6 +99,10 @@ export default function Home() {
     setNames(namesCopy);
     closeEditNameModal();
   }, [selectNameIndex, names, closeEditNameModal, setNames]);
+
+  const handleClickPrintOkButton = useCallback(() => {
+    printPdf(<RenmeiDocument names={names} company={company} department={department} />)
+  }, [company, department, names, printPdf]);
 
   return (
     <div className={styles.page}>
@@ -151,8 +156,7 @@ export default function Home() {
         isOpen={isOpen}
         onClickCancelButton={closeModal}
         onClickOverlay={closeModal}
-        onClickOkButton={printPdf}
-        loading={loadingPdf}
+        onClickOkButton={handleClickPrintOkButton}
       />
 
       <EditNameModal
