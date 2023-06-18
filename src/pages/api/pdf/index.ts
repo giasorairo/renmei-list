@@ -1,7 +1,3 @@
-const puppeteer = process.env.AWS_LAMBDA_FUNCTION_VERSION
-  ? require('puppeteer-core')
-  : require('puppeteer');
-
 import { NextApiRequest, NextApiResponse } from 'next';
 import chromium from 'chrome-aws-lambda';
 
@@ -17,7 +13,7 @@ export default async function pdf(req: NextApiRequest, res: NextApiResponse) {
     return;
   }
 
-  const browser = await puppeteer.launch({
+  const browser = await chromium.puppeteer.launch({
     args: chromium.args,
     defaultViewport: chromium.defaultViewport,
     executablePath: await chromium.executablePath,
