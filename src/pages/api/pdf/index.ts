@@ -1,17 +1,33 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import puppeteer from 'puppeteer';
 
+type Payload = {
+  names: string[],
+  company: string,
+  department: string,
+}
+
 export default async function pdf(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
-    res.send(`method is ${req.method}`);
+    res.send(`error: method is ${req.method}`);
     return;
   }
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({ headless: 'new' });
   const page = await browser.newPage();
 
-  const url = new URL('http://localhost:3000/pdf');
-  url.searchParams.append('names', '山田一郎,山田二郎,山田三郎');
-  url.searchParams.append('company', '株式会社山田印刷');
+  const payload = JSON.parse(req.body) as Payload;
+
+  const BASE_URL = process.env.PDF_BASE_URL;
+
+  if (!BASE_URL) {
+    res.send(`error: pdf url is ${BASE_URL} !!`);
+    return;
+  }
+
+  const url = new URL(BASE_URL);
+  url.searchParams.append('names', payload.names.join(','));
+  url.searchParams.append('company', payload.company);
+  url.searchParams.append('department', payload.department);
 
   await page.goto(url.toString());
 

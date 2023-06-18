@@ -39,7 +39,7 @@ export const EditDepartmentModal = (props: Props) => {
       isOpen={isOpen}
       onClickOverlay={onClickOverlay}
     >
-        <div className={style['dit-department-modal']}>
+        <div className={style['edit-department-modal']}>
           <div>
             <p className={style['edit-department-modal__label']}>会社名を入力してください</p>
             <Input
