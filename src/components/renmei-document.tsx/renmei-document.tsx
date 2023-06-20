@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
     marginBottom: FONT_SIZE,
     fontWeight: 'bold',
     fontFamily: 'kouzan-mouhitu',
+    lineHeight: 1,
   },
   namesContainer: {
     display: 'flex',
@@ -55,6 +56,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: FONT_SIZE,
     fontSize: FONT_SIZE,
+    lineHeight: 1,
   },
   namesRowContainer: {
     display: 'flex',

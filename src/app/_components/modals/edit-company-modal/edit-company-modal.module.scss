@@ -1,13 +1,11 @@
-.edit-company-modal {
+.editCompanyModal {
   padding: 24px;
-}
-
-.edit-company-modal__label {
-  margin-bottom: 8px;
-}
-
-.edit-company-modal__controller {
-  margin-top: 24px;
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 8px;
+}
+
+.editCompanyModal__controller {
+  flex-shrink: 0;
 }

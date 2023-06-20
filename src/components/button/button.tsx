@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes } from "react";
 import styles from './button.module.scss';
 import { Spinner } from "../spiner/spiner";
 
-type Color = 'black' | 'outlineBlack' | 'blue' | 'red';
+type Color = 'black' | 'outlineBlack' | 'blue' | 'outlineBlue' | 'red';
 
 type Props = {
   children: string,
