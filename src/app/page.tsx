@@ -116,20 +116,20 @@ export default function Home() {
               ))}
             </select>
             <Button
-              color='blue'
+              color='black'
               onClick={handleAddNames}
             >
-              行を追加する
+              名前を追加する
             </Button>
             <Button
-              color='red'
+              color='outlineBlack'
               onClick={handleDeleteNames}
             >
-              行を削除する
+              名前を削除する
             </Button>
             <div className={styles['renmeiList__printButtonContainer']}>
               <Button
-                color='black'
+                color='blue'
                 onClick={handleClickPrint}
               >
                 印刷する
@@ -166,7 +166,6 @@ export default function Home() {
         selectName={selectNameIndex === null ? '' : names[selectNameIndex]}
         onClickOkButton={handleClickOkButton}
         onClickOverlay={closeEditNameModal}
-        onClickCancelButton={closeEditNameModal}
       />
 
       <EditCompanyModal

@@ -8,6 +8,14 @@ export type FontFamily = {
 
 export const fontFamilies: FontFamily[] = [
   {
+    name: 'yuji-syuku',
+    src: '/fonts/YujiSyuku-Regular.ttf',
+  },
+  {
+    name: 'shippori-mincho-bold',
+    src: '/fonts/ShipporiMincho-Bold.ttf',
+  },
+  {
     name: 'kouzan-mouhitu',
     src: '/fonts/kouzan-mouhitu.otf',
   },
@@ -20,17 +28,9 @@ export const fontFamilies: FontFamily[] = [
     src: '/fonts/Stick-Regular.ttf',
   },
   {
-    name: 'yuji-syuku',
-    src: '/fonts/YujiSyuku-Regular.ttf',
-  },
-  {
     name: 'noto-serif-jp',
     src: '/fonts/NotoSerifJP-Regular.otf',
   },
-  {
-    name: 'shippori-mincho-bold',
-    src: '/fonts/ShipporiMincho-Bold.ttf',
-  }
 ];
 
 export const useFontFamily = () => {
@@ -51,6 +51,7 @@ export const useFontFamily = () => {
 
   useEffect(() => {
     setIsLoaded(false);
+    // これ、いらんかも
     document.fonts.load(`20px ${fontFamily.name}`).then(() => {
       setIsLoaded(true);
     });

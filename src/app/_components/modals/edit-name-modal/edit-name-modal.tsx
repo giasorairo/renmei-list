@@ -8,7 +8,6 @@ type Props = {
   isOpen: boolean,
   selectName: string,
   onClickOkButton: (value: string) => void,
-  onClickCancelButton: () => void,
   onClickOverlay: () => void,
 };
 
@@ -17,7 +16,6 @@ export const EditNameModal = (props: Props) => {
     isOpen,
     selectName,
     onClickOverlay,
-    onClickCancelButton,
     onClickOkButton,
   } = props;
   const [name, setName] = useState(selectName);
@@ -39,33 +37,26 @@ export const EditNameModal = (props: Props) => {
       isOpen={isOpen}
       onClickOverlay={onClickOverlay}
     >
-        <div
-          className={style['edit-name-modal']}
-        >
-          <div>
-            <p className={style['edit-name-modal__label']}>名前を入力してください</p>
-            <Input
-              type="text"
-              value={name}
-              onChange={handleChangeName}
-              placeholder='名前を入力'
-            />
-          </div>
-          <div className={style['edit-name-modal__controller']}>
-            <Button
-              color="black"
-              onClick={handleClickOkButton}
-            >
-              変更する
-            </Button>
-            <Button
-              color="outlineBlack"
-              onClick={onClickCancelButton}
-            >
-              変更しない
-            </Button>
-          </div>
+      <div
+        className={style['editNameModal']}
+      >
+        <div>
+          <Input
+            type="text"
+            value={name}
+            onChange={handleChangeName}
+            placeholder='名前を入力'
+          />
         </div>
-      </Modal>
+        <div className={style['editNameModal__controller']}>
+          <Button
+            color="blue"
+            onClick={handleClickOkButton}
+          >
+            決定
+          </Button>
+        </div>
+      </div>
+    </Modal>
   );
 };

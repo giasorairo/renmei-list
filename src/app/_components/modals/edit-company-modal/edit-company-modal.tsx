@@ -39,27 +39,20 @@ export const EditCompanyModal = (props: Props) => {
       isOpen={isOpen}
       onClickOverlay={onClickOverlay}
     >
-        <div className={style['edit-company-modal']}>
+        <div className={style['editCompanyModal']}>
           <div>
-            <p className={style['edit-company-modal__label']}>会社名を入力してください</p>
             <Input
               type="text"
               value={companyText}
               onChange={handleChangeCompany}
             />
           </div>
-          <div className={style['edit-company-modal__controller']}>
+          <div className={style['editCompanyModal__controller']}>
             <Button
-              color="black"
+              color="blue"
               onClick={handleClickOkButton}
             >
-              変更する
-            </Button>
-            <Button
-              color="outlineBlack"
-              onClick={onClickCancelButton}
-            >
-              変更しない
+              決定
             </Button>
           </div>
         </div>
