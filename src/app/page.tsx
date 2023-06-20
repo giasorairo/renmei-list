@@ -107,29 +107,29 @@ export default function Home() {
 
   return (
     <div className={styles.page}>
-      <section className={styles['renmei-list']}>
-        <div className={styles['renmei-list__controller']}>
-          <div className={styles['renmei-list__button-container']}>
-            <select className={styles['renmei-list__select']} onChange={handleSelectFontFamily}>
+      <section className={styles['renmeiList']}>
+        <div className={styles['renmeiList__controller']}>
+          <div className={styles['renmeiList__buttonContainer']}>
+            <select className={styles['renmeiList__select']} onChange={handleSelectFontFamily}>
               {fontFamilies.map((_fontFamily, i) => (
                 <option key={`font-option-${i}`} value={_fontFamily.name}>{_fontFamily.name}</option>
               ))}
             </select>
             <Button
-              color='blue'
+              color='black'
               onClick={handleAddNames}
             >
-              行を追加する
+              名前を追加する
             </Button>
             <Button
-              color='red'
+              color='outlineBlack'
               onClick={handleDeleteNames}
             >
-              行を削除する
+              名前を削除する
             </Button>
-            <div className={styles['renmei-list__print-button-container']}>
+            <div className={styles['renmeiList__printButtonContainer']}>
               <Button
-                color='black'
+                color='blue'
                 onClick={handleClickPrint}
               >
                 印刷する
@@ -137,9 +137,9 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className={styles['renmei-list-container']}>
-          <div className={styles['renmei-list__pdf']}>
-            <div className={styles['renmei-list__scroll-container']}>
+        <div className={styles['renmeiList__container']}>
+          <div className={styles['renmeiList__pdf']}>
+            <div className={styles['renmeiList__scrollContainer']}>
               <RenmeiList
                 names={names}
                 company={company}
@@ -166,7 +166,6 @@ export default function Home() {
         selectName={selectNameIndex === null ? '' : names[selectNameIndex]}
         onClickOkButton={handleClickOkButton}
         onClickOverlay={closeEditNameModal}
-        onClickCancelButton={closeEditNameModal}
       />
 
       <EditCompanyModal

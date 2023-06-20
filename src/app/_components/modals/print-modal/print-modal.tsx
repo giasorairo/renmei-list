@@ -26,7 +26,7 @@ export const PrintModal: FC<Props> = ({
         </div>
         <div className={style.printModal__controller}>
           <Button
-            color="black"
+            color="blue"
             onClick={onClickOkButton}
           >
             印刷する

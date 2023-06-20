@@ -1,6 +1,6 @@
 .button {
   box-sizing: border-box;
-  padding: 12px;
+  padding: 8px 12px;
   background: none;
   border: none;
   border-radius: 4px;
@@ -31,6 +31,14 @@
   &:disabled {
     background-color: rgb(72, 124, 243, 0.3);
     border-color: rgb(72, 124, 243, 0.3);
+  }
+}
+
+.outlineBlue {
+  border: 1px solid rgb(72, 124, 243);
+  color: rgb(72, 124, 243);
+  &:disabled {
+    border-color: rgba(black, 0.3);
   }
 }
 
