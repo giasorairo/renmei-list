@@ -107,10 +107,10 @@ export default function Home() {
 
   return (
     <div className={styles.page}>
-      <section className={styles['renmei-list']}>
-        <div className={styles['renmei-list__controller']}>
-          <div className={styles['renmei-list__button-container']}>
-            <select className={styles['renmei-list__select']} onChange={handleSelectFontFamily}>
+      <section className={styles['renmeiList']}>
+        <div className={styles['renmeiList__controller']}>
+          <div className={styles['renmeiList__buttonContainer']}>
+            <select className={styles['renmeiList__select']} onChange={handleSelectFontFamily}>
               {fontFamilies.map((_fontFamily, i) => (
                 <option key={`font-option-${i}`} value={_fontFamily.name}>{_fontFamily.name}</option>
               ))}
@@ -127,7 +127,7 @@ export default function Home() {
             >
               行を削除する
             </Button>
-            <div className={styles['renmei-list__print-button-container']}>
+            <div className={styles['renmeiList__printButtonContainer']}>
               <Button
                 color='black'
                 onClick={handleClickPrint}
@@ -137,9 +137,9 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className={styles['renmei-list-container']}>
-          <div className={styles['renmei-list__pdf']}>
-            <div className={styles['renmei-list__scroll-container']}>
+        <div className={styles['renmeiList__container']}>
+          <div className={styles['renmeiList__pdf']}>
+            <div className={styles['renmeiList__scrollContainer']}>
               <RenmeiList
                 names={names}
                 company={company}

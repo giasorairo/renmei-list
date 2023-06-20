@@ -3,12 +3,12 @@
   text-align: center;
 }
 
-.renmei-list {
+.renmeiList {
   display: flex;
   height: 100lvh;
 }
 
-.renmei-list-container {
+.renmeiList__container {
   background-color: rgb(89, 97, 111);
   display: grid;
   place-items: center;
@@ -17,7 +17,7 @@
   font-family: 'kouzan-mouhitu';
 }
 
-.renmei-list__pdf {
+.renmeiList__pdf {
   display: grid;
   box-sizing: border-box;
   padding: 0 20px;
@@ -30,15 +30,15 @@
   }
 }
 
-.renmei-list__scroll-container {
+.renmeiList__scrollContainer {
   overflow-x: scroll;
 }
 
-.renmei-list__select {
+.renmeiList__select {
   padding: 8px;
 }
 
-.renmei-list__controller {
+.renmeiList__controller {
   flex-shrink: 0;
   padding: 0 32px;
   display: flex;
@@ -46,7 +46,7 @@
   align-items: center;
 }
 
-.renmei-list__button-container {
+.renmeiList__buttonContainer {
   height: calc(inherit - 8px);
   max-height: 400px;
   flex-direction: column;
@@ -56,7 +56,7 @@
   justify-content: center;
 }
 
-.renmei-list__print-button-container {
+.renmeiList__printButtonContainer {
   margin-top: 20px;
   display: flex;
   width: 100%;
