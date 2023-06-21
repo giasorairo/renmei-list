@@ -1,8 +1,7 @@
 import { Button } from '@/components/button/button';
 import { Modal } from '@/components/modal/modal';
-import { FC, useCallback, useEffect, useState } from 'react';
+import { FC } from 'react';
 import style from './print-modal.module.scss';
-import { Input } from '@/components/input/input';
 
 type Props = {
   isOpen: boolean,
