@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     marginTop: 'auto',
     fontWeight: 'bold',
     fontFamily: 'kouzan-mouhitu',
+    lineHeight: 1,
   },
   company: {
     display: 'flex',

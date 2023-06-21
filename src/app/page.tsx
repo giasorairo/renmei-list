@@ -14,7 +14,7 @@ import { useFontFamily } from './_hooks/use-font-family';
 import { RenmeiList } from '@/components/renmai-list/renmei-list';
 import { usePdf } from './_hooks/use-pdf';
 import { PrintModal } from './_components/modals/print-modal/print-modal';
-import { RenmeiDocument } from '@/components/renmei-document.tsx/renmei-document';
+import { RenmeiDocument } from '@/components/renmei-document/renmei-document';
 import { fontFamilies } from './_hooks/use-font-family';
 
 export default function Home() {
