@@ -17,6 +17,7 @@ export const useOrientation = () => {
       }
     };
     
+    handleResize();
     window.addEventListener('resize', handleResize);
 
     return () => {
