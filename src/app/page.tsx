@@ -120,7 +120,6 @@ export default function Home() {
     <div className={styles.page}>
       <SEO
         title='連名作成'
-        ogImageUrl='/images/ogp.png'
       />
       <section className={styles['renmeiList']}>
         <div className={styles['renmeiList__controller']}>

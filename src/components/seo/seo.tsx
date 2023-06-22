@@ -1,4 +1,3 @@
-import Head from "next/head";
 import { config } from "@/site.config";
 
 type Props = {
@@ -22,7 +21,7 @@ export const SEO: React.FC<Props> = (props) => {
 
   const pageUrl = `${config.siteRoot}${path || ""}`;
   return (
-    <Head>
+    <head>
       <title>
         {removeSiteNameFromTitle
           ? title
@@ -44,6 +43,6 @@ export const SEO: React.FC<Props> = (props) => {
       )}
       {path && <link rel="canonical" href={pageUrl} />}
       {noindex && <meta name="robots" content="noindex" />}
-    </Head>
+    </head>
   );
 };
