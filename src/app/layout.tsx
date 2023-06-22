@@ -1,3 +1,4 @@
+import { SEO } from '@/components/seo/seo';
 import './globals.css';
 
 export const metadata = {
@@ -17,6 +18,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/icon-192x192.png" />
         <meta name="theme-color" content="#fff" />
       </head>
+      <SEO title='作成ページ' />
       <body>
         {children}
       </body>

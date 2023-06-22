@@ -117,16 +117,13 @@ export default function Home() {
   }
 
   return (
-    <div className={styles.page}>
-      <SEO
-        title='連名作成'
-      />
-      <section className={styles['renmeiList']}>
+    <section className={styles.page}>
+      <div className={styles['renmeiList']}>
         <div className={styles['renmeiList__controller']}>
           <div className={styles['renmeiList__buttonContainer']}>
             <select className={styles['renmeiList__select']} onChange={handleSelectFontFamily}>
               {fontFamilies.map((_fontFamily, i) => (
-                <option key={`font-option-${i}`} value={_fontFamily.name}>{_fontFamily.name}</option>
+                <option key={`font-option-${i}`} value={_fontFamily.name}>{_fontFamily.displayName}</option>
               ))}
             </select>
             <Button
@@ -166,7 +163,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
       <PrintModal
         isOpen={isOpen}
@@ -198,6 +195,6 @@ export default function Home() {
         onClickOverlay={closeEditDepartmentModal}
       />
 
-    </div>
+    </section>
   )
 };
