@@ -19,6 +19,7 @@ import { fontFamilies } from './_hooks/use-font-family';
 import { LandscapeModeRequest } from '@/components/landscape-mode-request/landscape-mode-request';
 import { useMobileDetect } from '@/hooks/use-mobile-detect';
 import { useOrientation } from '@/hooks/use-orientation';
+import { SEO } from '@/components/seo/seo';
 
 export default function Home() {
 
@@ -117,6 +118,10 @@ export default function Home() {
 
   return (
     <div className={styles.page}>
+      <SEO
+        title='連名作成'
+        ogImageUrl='/images/ogp.png'
+      />
       <section className={styles['renmeiList']}>
         <div className={styles['renmeiList__controller']}>
           <div className={styles['renmeiList__buttonContainer']}>
