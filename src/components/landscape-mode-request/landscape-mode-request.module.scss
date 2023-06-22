@@ -1,0 +1,16 @@
+.landscapeModeRequest {
+  position: absolute;
+  width: 100dvw;
+  height: 100dvh;
+  background-color: rgb(89, 97, 111);
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.landscapeModeRequest__image {
+  max-width: 100%;
+  max-height: 100%;
+}

@@ -16,6 +16,9 @@ import { usePdf } from './_hooks/use-pdf';
 import { PrintModal } from './_components/modals/print-modal/print-modal';
 import { RenmeiDocument } from '@/components/renmei-document/renmei-document';
 import { fontFamilies } from './_hooks/use-font-family';
+import { LandscapeModeRequest } from '@/components/landscape-mode-request/landscape-mode-request';
+import { useMobileDetect } from '@/hooks/use-mobile-detect';
+import { useOrientation } from '@/hooks/use-orientation';
 
 export default function Home() {
 
@@ -104,6 +107,13 @@ export default function Home() {
   const handleClickPrintOkButton = useCallback(() => {
     printPdf(<RenmeiDocument names={names} company={company} department={department} fontFamily={fontFamily} />)
   }, [company, department, fontFamily, names, printPdf]);
+
+  const { isMobile } = useMobileDetect();
+  const { isLandscape } = useOrientation();
+
+  if (isMobile && !isLandscape) {
+    return (<LandscapeModeRequest />);
+  }
 
   return (
     <div className={styles.page}>
