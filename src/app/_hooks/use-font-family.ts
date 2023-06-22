@@ -3,32 +3,39 @@ import { useCallback, useEffect, useState } from 'react';
 
 export type FontFamily = {
   name: string,
+  displayName: string,
   src: string,
 };
 
 export const fontFamilies: FontFamily[] = [
   {
     name: 'yuji-syuku',
+    displayName: '佑字 肅フォント',
     src: '/fonts/YujiSyuku-Regular.ttf',
   },
   {
     name: 'shippori-mincho-bold',
+    displayName: 'しっぽり明朝フォント',
     src: '/fonts/ShipporiMincho-Bold.ttf',
   },
   {
     name: 'kouzan-mouhitu',
+    displayName: '衡山毛筆フォント',
     src: '/fonts/kouzan-mouhitu.otf',
   },
   {
     name: 'shokaki-sarari',
+    displayName: 'しょかきさらりフォント',
     src: '/fonts/shokaki-sarari.ttf',
   },
   {
     name: 'stick',
+    displayName: 'stick フォント',
     src: '/fonts/Stick-Regular.ttf',
   },
   {
     name: 'noto-serif-jp',
+    displayName: 'noto serif jp フォント',
     src: '/fonts/NotoSerifJP-Regular.otf',
   },
 ];
