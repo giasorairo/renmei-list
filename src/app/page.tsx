@@ -5,7 +5,6 @@ import { useCallback, useState } from 'react';
 import { Button } from '@/components/button/button';
 import { useModal } from '@/components/modal/hooks/use-modal';
 import { EditNameModal } from './_components/modals/edit-name-modal/edit-name-modal';
-import { isEvenNumber } from '@/utilities/is-even-number';
 import { EditCompanyModal } from './_components/modals/edit-company-modal/edit-company-modal';
 import { useCompany } from './_hooks/use-company';
 import { useDepartment } from './_hooks/use-department';
@@ -19,29 +18,10 @@ import { fontFamilies } from './_hooks/use-font-family';
 import { LandscapeModeRequest } from '@/components/landscape-mode-request/landscape-mode-request';
 import { useMobileDetect } from '@/hooks/use-mobile-detect';
 import { useOrientation } from '@/hooks/use-orientation';
-import { SEO } from '@/components/seo/seo';
+import { useNames } from './_hooks/use-names';
 
 export default function Home() {
-
-  const [names, setNames] = useState([
-    '山田佐賀',
-    '山田宮崎',
-    '山田大分',
-    '山田福岡',
-    '山田長崎',
-    '山田鹿児島',
-    '山田沖縄',
-    '山田熊本',
-    '',
-    '山田愛媛',
-    '山田香川',
-    '山田徳島',
-    '山田高知',
-    '山田山口',
-    '山田広島',
-    '',
-  ]);
-
+  const { names, setNamesEnhance, handleAddNames, handleDeleteNames } = useNames();
   const { fontFamily, handleSelectFontFamily, isLoaded } = useFontFamily();
   const { isOpen, openModal, closeModal } = useModal();
   const {
@@ -72,18 +52,7 @@ export default function Home() {
     closeEditDepartmentModal();
   }, [changeDepartment, closeEditDepartmentModal]);
 
-  const handleAddNames = useCallback(() => {
-    setNames((prev) => [...prev, '', '']);
-  }, []);
-
   const { printPdf } = usePdf(names, company, department);
-
-  const handleDeleteNames = useCallback(() => {
-    const deleteNameCount = isEvenNumber(names.length) ? 2 :  1;
-    // names.length が偶数の場合は 2 つ、奇数の場合は 1 つ要素を削除する
-    const deletedNames = names.slice(0, names.length - deleteNameCount);
-    setNames(deletedNames)
-  }, [names]);
 
   const handleClickPrint = useCallback(() => {
     openModal();
@@ -101,9 +70,9 @@ export default function Home() {
     }
     const namesCopy = [...names];
     namesCopy[selectNameIndex] = value
-    setNames(namesCopy);
+    setNamesEnhance(namesCopy)
     closeEditNameModal();
-  }, [selectNameIndex, names, closeEditNameModal, setNames]);
+  }, [selectNameIndex, names, setNamesEnhance, closeEditNameModal]);
 
   const handleClickPrintOkButton = useCallback(() => {
     printPdf(<RenmeiDocument names={names} company={company} department={department} fontFamily={fontFamily} />)
