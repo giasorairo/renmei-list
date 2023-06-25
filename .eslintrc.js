@@ -15,6 +15,7 @@ const config = {
     "import/extensions": "off",
     "react/jsx-props-no-spreading": "off",
     "@typescript-eslint/no-var-requires": "off",
+    "react/no-array-index-key": "off",
   },
 };
 

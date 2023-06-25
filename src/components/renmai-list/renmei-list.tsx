@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { isOddNumber } from "@/utilities/is-odd-number";
 import { isEvenNumber } from "@/utilities/is-even-number";
+import { onPressEnter } from "@/utilities/on-press-enter";
 import style from "./renmei-list.module.scss";
 
 type Props = {
@@ -33,20 +34,20 @@ export const RenmeiList: FC<Props> = ({
                 key={name}
                 className={style.names__name}
                 onClick={() => onClickName?.(2 * key)}
-                onKeyDown={() => onClickName?.(2 * key)}
+                onKeyDown={(e) => onPressEnter(e, () => onClickName?.(2 * key))}
                 role="button"
                 tabIndex={0}
               >
-                {name.split("").map((char) => (
-                  <div key={`${name}-${char}`}>{char}</div>
+                {name.split("").map((char, charIndex) => (
+                  <div key={`${name}-${char}-${charIndex}`}>{char}</div>
                 ))}
               </div>
             ) : (
               <div
-                key={name}
+                key={`${name}-${key}`}
                 className={style["names__empty-name"]}
                 onClick={() => onClickName?.(2 * key)}
-                onKeyDown={() => onClickName?.(2 * key)}
+                onKeyDown={(e) => onPressEnter(e, () => onClickName?.(2 * key))}
                 data-is-edit={Boolean(onClickName)}
                 role="button"
                 tabIndex={0}
@@ -65,20 +66,24 @@ export const RenmeiList: FC<Props> = ({
                 key={name}
                 className={style.names__name}
                 onClick={() => onClickName?.(2 * key + 1)}
-                onKeyDown={() => onClickName?.(2 * key + 1)}
+                onKeyDown={(e) =>
+                  onPressEnter(e, () => onClickName?.(2 * key + 1))
+                }
                 role="button"
                 tabIndex={0}
               >
-                {name.split("").map((char) => (
-                  <div key={`${name}-${char}`}>{char}</div>
+                {name.split("").map((char, charIndex) => (
+                  <div key={`${name}-${char}-${charIndex}`}>{char}</div>
                 ))}
               </div>
             ) : (
               <div
-                key={name}
+                key={`${name}-${key}`}
                 className={style["names__empty-name"]}
                 onClick={() => onClickName?.(2 * key + 1)}
-                onKeyDown={() => onClickName?.(2 * key + 1)}
+                onKeyDown={(e) =>
+                  onPressEnter(e, () => onClickName?.(2 * key + 1))
+                }
                 role="button"
                 tabIndex={0}
                 data-is-edit={Boolean(onClickName)}
@@ -92,7 +97,7 @@ export const RenmeiList: FC<Props> = ({
     <div
       className={style.company}
       onClick={() => onClickCompany?.()}
-      onKeyDown={() => onClickCompany?.()}
+      onKeyDown={(e) => onPressEnter(e, onClickCompany)}
       role="button"
       tabIndex={0}
     >
@@ -101,7 +106,7 @@ export const RenmeiList: FC<Props> = ({
     <div
       className={style.department}
       onClick={() => onClickDepartment?.()}
-      onKeyDown={() => onClickCompany?.()}
+      onKeyDown={(e) => onPressEnter(e, onClickCompany)}
       role="button"
       tabIndex={0}
     >
