@@ -1,4 +1,5 @@
 import { config } from "@/site.config";
+import { FC } from "react";
 
 type Props = {
   title: string;
@@ -9,7 +10,7 @@ type Props = {
   removeSiteNameFromTitle?: boolean;
 };
 
-export const SEO: React.FC<Props> = (props) => {
+export const SEO: FC<Props> = (props) => {
   const {
     path,
     title,
