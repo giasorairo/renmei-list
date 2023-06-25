@@ -7,7 +7,8 @@ const getMobileDetect = (userAgent: string) => {
   const isWindows = (): boolean => Boolean(userAgent.match(/IEMobile/i));
   const isSSR = (): boolean => Boolean(userAgent.match(/SSR/i));
 
-  const isMobile = (): boolean => Boolean(isAndroid() || isIos() || isOpera() || isWindows());
+  const isMobile = (): boolean =>
+    Boolean(isAndroid() || isIos() || isOpera() || isWindows());
   const isDesktop = (): boolean => Boolean(!isMobile() && !isSSR());
 
   return {
@@ -15,12 +16,11 @@ const getMobileDetect = (userAgent: string) => {
     isDesktop,
     isAndroid,
     isIos,
-    isSSR
+    isSSR,
   };
 };
 
 export const useMobileDetect = () => {
-
   const [isMobile, setIsMobile] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
   const [isAndroid, setIsAndroid] = useState(false);
@@ -28,13 +28,20 @@ export const useMobileDetect = () => {
   const [isSSR, setIsSSR] = useState(false);
 
   useEffect(() => {
-    const userAgent = typeof navigator === 'undefined' ? 'SSR' : window.navigator.userAgent;
-    const { isMobile, isDesktop, isAndroid, isIos, isSSR } = getMobileDetect(userAgent);
-    setIsMobile(isMobile());
-    setIsDesktop(isDesktop());
-    setIsAndroid(isAndroid());
-    setIsIos(isIos());
-    setIsSSR(isSSR());
+    const userAgent =
+      typeof navigator === "undefined" ? "SSR" : window.navigator.userAgent;
+    const {
+      isMobile: checkIsMobile,
+      isDesktop: checkIsDesktop,
+      isAndroid: checkIsAndroid,
+      isIos: checkIsIos,
+      isSSR: checkIsSSR,
+    } = getMobileDetect(userAgent);
+    setIsMobile(checkIsMobile());
+    setIsDesktop(checkIsDesktop());
+    setIsAndroid(checkIsAndroid());
+    setIsIos(checkIsIos());
+    setIsSSR(checkIsSSR());
   }, []);
 
   return { isMobile, isDesktop, isAndroid, isIos, isSSR };
